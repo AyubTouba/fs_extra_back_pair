@@ -4,7 +4,7 @@ A fork of [`fs_extra`](https://crates.io/crates/fs_extra), a Rust library for ad
 
 This fork adds one key feature:  
 ➡️ **`path_file` in `TransitProcess`** — to track the exact file being copied during progress updates.  
-Useful in apps (like Tauri) where monitoring nested file paths is required.
+Useful in apps where monitoring nested file paths is required.
 
 ---
 
@@ -14,7 +14,7 @@ In your `Cargo.toml`:
 
 ```toml
 [dependencies]
-fs_extra_back_pair = { git = "https://github.com/AyubTouba/fs_extra_back_pair", branch="main" }
+fs_extra_back_pair = { git = "https://github.com/AyubTouba/fs_extra_back_pair", branch="master" }
 ```
 ---
 
