@@ -199,6 +199,7 @@ where
     let mut copied_bytes: u64 = 0;
 
     let mut file_to = File::create(to)?;
+
     while !buf.is_empty() {
         match file_from.read(&mut buf) {
             Ok(0) => break,

@@ -127,6 +127,8 @@ pub struct TransitProcess {
     pub file_name: String,
     /// Transit state
     pub state: TransitState,
+    /// Path current copied file
+    pub path_file: String,
 }
 
 ///
@@ -168,6 +170,7 @@ impl Clone for TransitProcess {
             file_total_bytes: self.file_total_bytes,
             file_name: self.file_name.clone(),
             state: self.state.clone(),
+            path_file: self.path_file.clone(),
         }
     }
 }
@@ -912,6 +915,7 @@ where
         file_total_bytes: 0,
         file_name: String::new(),
         state: TransitState::Normal,
+        path_file: String::new(),
     };
 
     let mut options = options.clone();
@@ -926,7 +930,6 @@ where
         }
         let file_name = file_name.unwrap();
         to.push(file_name);
-
         let mut file_options = super::file::CopyOptions {
             overwrite: options.overwrite,
             skip_exist: options.skip_exist,
@@ -939,6 +942,11 @@ where
             err!("Invalid file name", ErrorKind::InvalidFileName);
         }
 
+        info_process.path_file = Path::new(&file)
+            .strip_prefix(from)
+            .unwrap_or_else(|_| Path::new(&file))
+            .to_string_lossy()
+            .into_owned();
         info_process.file_bytes_copied = 0;
         info_process.file_total_bytes = Path::new(&file).metadata()?.len();
 
@@ -1249,6 +1257,7 @@ where
         file_total_bytes: 0,
         file_name: String::new(),
         state: TransitState::Normal,
+        path_file: String::new(),
     };
 
     let mut options = options.clone();
@@ -1275,6 +1284,12 @@ where
         } else {
             err!("Invalid file name", ErrorKind::InvalidFileName);
         }
+
+        info_process.path_file = Path::new(&file)
+            .strip_prefix(from)
+            .unwrap_or_else(|_| Path::new(&file))
+            .to_string_lossy()
+            .into_owned();
 
         info_process.file_bytes_copied = 0;
         info_process.file_total_bytes = Path::new(&file).metadata()?.len();
