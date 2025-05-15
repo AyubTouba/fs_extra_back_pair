@@ -3,17 +3,17 @@ use std::path::Path;
 use std::sync::mpsc::{self, TryRecvError};
 use std::thread;
 
-extern crate fs_extra;
-use fs_extra::error::*;
-use fs_extra::*;
+extern crate fs_extra_back_pair;
+use fs_extra_back_pair::error::*;
+use fs_extra_back_pair::*;
 
 fn files_eq<P, Q>(file1: P, file2: Q) -> bool
 where
     P: AsRef<Path>,
     Q: AsRef<Path>,
 {
-    let content1 = fs_extra::file::read_to_string(file1).unwrap();
-    let content2 = fs_extra::file::read_to_string(file2).unwrap();
+    let content1 = fs_extra_back_pair::file::read_to_string(file1).unwrap();
+    let content2 = fs_extra_back_pair::file::read_to_string(file2).unwrap();
     content1 == content2
 }
 
@@ -291,7 +291,7 @@ fn it_copy_exist_not_overwrite() {
         Ok(_) => panic!("Should be a error!"),
         Err(err) => match err.kind {
             ErrorKind::AlreadyExists => {}
-            _ => panic!(format!("{}", err.to_string())),
+            _ => panic!("{}", format!("{}", err.to_string())),
         },
     };
 }
@@ -539,19 +539,19 @@ fn it_copy_using_first_levels() {
 
     assert!(!d3_level_1.1.exists());
 
-    fs_extra::file::write_all(&file1.0, "content1").unwrap();
-    fs_extra::file::write_all(&file2.0, "content2").unwrap();
-    fs_extra::file::write_all(&file3.0, "content3").unwrap();
-    fs_extra::file::write_all(&file4.0, "content4").unwrap();
-    fs_extra::file::write_all(&file5.0, "content5").unwrap();
+    fs_extra_back_pair::file::write_all(&file1.0, "content1").unwrap();
+    fs_extra_back_pair::file::write_all(&file2.0, "content2").unwrap();
+    fs_extra_back_pair::file::write_all(&file3.0, "content3").unwrap();
+    fs_extra_back_pair::file::write_all(&file4.0, "content4").unwrap();
+    fs_extra_back_pair::file::write_all(&file5.0, "content5").unwrap();
 
-    fs_extra::file::write_all(&file21.0, "2content1").unwrap();
-    fs_extra::file::write_all(&file22.0, "2content2").unwrap();
-    fs_extra::file::write_all(&file23.0, "2content3").unwrap();
-    fs_extra::file::write_all(&file24.0, "2content4").unwrap();
-    fs_extra::file::write_all(&file25.0, "2content5").unwrap();
+    fs_extra_back_pair::file::write_all(&file21.0, "2content1").unwrap();
+    fs_extra_back_pair::file::write_all(&file22.0, "2content2").unwrap();
+    fs_extra_back_pair::file::write_all(&file23.0, "2content3").unwrap();
+    fs_extra_back_pair::file::write_all(&file24.0, "2content4").unwrap();
+    fs_extra_back_pair::file::write_all(&file25.0, "2content5").unwrap();
 
-    fs_extra::file::write_all(&file31.0, "3content1").unwrap();
+    fs_extra_back_pair::file::write_all(&file31.0, "3content1").unwrap();
 
     assert!(file1.0.exists());
     assert!(file2.0.exists());
@@ -730,19 +730,19 @@ fn it_copy_using_four_levels() {
 
     assert!(!d3_level_1.1.exists());
 
-    fs_extra::file::write_all(&file1.0, "content1").unwrap();
-    fs_extra::file::write_all(&file2.0, "content2").unwrap();
-    fs_extra::file::write_all(&file3.0, "content3").unwrap();
-    fs_extra::file::write_all(&file4.0, "content4").unwrap();
-    fs_extra::file::write_all(&file5.0, "content5").unwrap();
+    fs_extra_back_pair::file::write_all(&file1.0, "content1").unwrap();
+    fs_extra_back_pair::file::write_all(&file2.0, "content2").unwrap();
+    fs_extra_back_pair::file::write_all(&file3.0, "content3").unwrap();
+    fs_extra_back_pair::file::write_all(&file4.0, "content4").unwrap();
+    fs_extra_back_pair::file::write_all(&file5.0, "content5").unwrap();
 
-    fs_extra::file::write_all(&file21.0, "2content1").unwrap();
-    fs_extra::file::write_all(&file22.0, "2content2").unwrap();
-    fs_extra::file::write_all(&file23.0, "2content3").unwrap();
-    fs_extra::file::write_all(&file24.0, "2content4").unwrap();
-    fs_extra::file::write_all(&file25.0, "2content5").unwrap();
+    fs_extra_back_pair::file::write_all(&file21.0, "2content1").unwrap();
+    fs_extra_back_pair::file::write_all(&file22.0, "2content2").unwrap();
+    fs_extra_back_pair::file::write_all(&file23.0, "2content3").unwrap();
+    fs_extra_back_pair::file::write_all(&file24.0, "2content4").unwrap();
+    fs_extra_back_pair::file::write_all(&file25.0, "2content5").unwrap();
 
-    fs_extra::file::write_all(&file31.0, "3content1").unwrap();
+    fs_extra_back_pair::file::write_all(&file31.0, "3content1").unwrap();
 
     assert!(file1.0.exists());
     assert!(file2.0.exists());
@@ -830,7 +830,7 @@ fn it_copy_content_only_opton() {
                 assert_eq!(1, 1);
             }
             _ => {
-                panic!(format!("wrong error {}", err.to_string()));
+                panic!("{}", format!("wrong error {}", err.to_string()));
             }
         },
         Ok(_) => {
@@ -927,7 +927,7 @@ fn it_copy_progress_work() {
 
     match result {
         Ok(_) => {}
-        Err(err) => panic!(err),
+        Err(err) => panic!("{:#?}", err),
     }
 }
 
@@ -1035,7 +1035,7 @@ fn it_copy_with_progress_work_dif_buf_size() {
 
         match result {
             Ok(_) => {}
-            Err(err) => panic!(err),
+            Err(err) => panic!("{:#?}", err),
         }
     })
     .join();
@@ -1057,7 +1057,7 @@ fn it_copy_with_progress_work_dif_buf_size() {
 
     match result {
         Ok(_) => {}
-        Err(err) => panic!(err),
+        Err(err) => panic!("{:#?}", err),
     }
 }
 
@@ -1183,7 +1183,7 @@ fn it_copy_with_progress_exist_overwrite() {
 
     match result {
         Ok(_) => {}
-        Err(err) => panic!(err),
+        Err(err) => panic!("{:#?}", err),
     }
 
     match rx.recv() {
@@ -1259,7 +1259,7 @@ fn it_copy_with_progress_exist_not_overwrite() {
         Ok(_) => panic!("Should be a error!"),
         Err(err) => match err.kind {
             ErrorKind::AlreadyExists => {}
-            _ => panic!(format!("{}", err.to_string())),
+            _ => panic!("{}", format!("{}", err.to_string())),
         },
     };
 }
@@ -1342,7 +1342,7 @@ fn it_copy_with_progress_exist_skip_exist() {
 
     match result {
         Ok(_) => {}
-        Err(err) => panic!(err),
+        Err(err) => panic!("{:#?}", err),
     }
 
     match rx.recv() {
@@ -1431,7 +1431,7 @@ fn it_copy_with_progress_exist_overwrite_and_skip_exist() {
 
     match result {
         Ok(_) => {}
-        Err(err) => panic!(err),
+        Err(err) => panic!("{:#?}", err),
     }
 
     match rx.recv() {
@@ -1546,19 +1546,19 @@ fn it_copy_with_progress_using_first_levels() {
 
     assert!(!d3_level_1.1.exists());
 
-    fs_extra::file::write_all(&file1.0, "content1").unwrap();
-    fs_extra::file::write_all(&file2.0, "content2").unwrap();
-    fs_extra::file::write_all(&file3.0, "content3").unwrap();
-    fs_extra::file::write_all(&file4.0, "content4").unwrap();
-    fs_extra::file::write_all(&file5.0, "content5").unwrap();
+    fs_extra_back_pair::file::write_all(&file1.0, "content1").unwrap();
+    fs_extra_back_pair::file::write_all(&file2.0, "content2").unwrap();
+    fs_extra_back_pair::file::write_all(&file3.0, "content3").unwrap();
+    fs_extra_back_pair::file::write_all(&file4.0, "content4").unwrap();
+    fs_extra_back_pair::file::write_all(&file5.0, "content5").unwrap();
 
-    fs_extra::file::write_all(&file21.0, "2content1").unwrap();
-    fs_extra::file::write_all(&file22.0, "2content2").unwrap();
-    fs_extra::file::write_all(&file23.0, "2content3").unwrap();
-    fs_extra::file::write_all(&file24.0, "2content4").unwrap();
-    fs_extra::file::write_all(&file25.0, "2content5").unwrap();
+    fs_extra_back_pair::file::write_all(&file21.0, "2content1").unwrap();
+    fs_extra_back_pair::file::write_all(&file22.0, "2content2").unwrap();
+    fs_extra_back_pair::file::write_all(&file23.0, "2content3").unwrap();
+    fs_extra_back_pair::file::write_all(&file24.0, "2content4").unwrap();
+    fs_extra_back_pair::file::write_all(&file25.0, "2content5").unwrap();
 
-    fs_extra::file::write_all(&file31.0, "3content1").unwrap();
+    fs_extra_back_pair::file::write_all(&file31.0, "3content1").unwrap();
 
     assert!(file1.0.exists());
     assert!(file2.0.exists());
@@ -1641,7 +1641,7 @@ fn it_copy_with_progress_using_first_levels() {
 
     match result {
         Ok(_) => {}
-        Err(err) => panic!(err),
+        Err(err) => panic!("{:#?}", err),
     }
 
     match rx.recv() {
@@ -1756,19 +1756,19 @@ fn it_copy_with_progress_using_four_levels() {
 
     assert!(!d3_level_1.1.exists());
 
-    fs_extra::file::write_all(&file1.0, "content1").unwrap();
-    fs_extra::file::write_all(&file2.0, "content2").unwrap();
-    fs_extra::file::write_all(&file3.0, "content3").unwrap();
-    fs_extra::file::write_all(&file4.0, "content4").unwrap();
-    fs_extra::file::write_all(&file5.0, "content5").unwrap();
+    fs_extra_back_pair::file::write_all(&file1.0, "content1").unwrap();
+    fs_extra_back_pair::file::write_all(&file2.0, "content2").unwrap();
+    fs_extra_back_pair::file::write_all(&file3.0, "content3").unwrap();
+    fs_extra_back_pair::file::write_all(&file4.0, "content4").unwrap();
+    fs_extra_back_pair::file::write_all(&file5.0, "content5").unwrap();
 
-    fs_extra::file::write_all(&file21.0, "2content1").unwrap();
-    fs_extra::file::write_all(&file22.0, "2content2").unwrap();
-    fs_extra::file::write_all(&file23.0, "2content3").unwrap();
-    fs_extra::file::write_all(&file24.0, "2content4").unwrap();
-    fs_extra::file::write_all(&file25.0, "2content5").unwrap();
+    fs_extra_back_pair::file::write_all(&file21.0, "2content1").unwrap();
+    fs_extra_back_pair::file::write_all(&file22.0, "2content2").unwrap();
+    fs_extra_back_pair::file::write_all(&file23.0, "2content3").unwrap();
+    fs_extra_back_pair::file::write_all(&file24.0, "2content4").unwrap();
+    fs_extra_back_pair::file::write_all(&file25.0, "2content5").unwrap();
 
-    fs_extra::file::write_all(&file31.0, "3content1").unwrap();
+    fs_extra_back_pair::file::write_all(&file31.0, "3content1").unwrap();
 
     assert!(file1.0.exists());
     assert!(file2.0.exists());
@@ -1851,7 +1851,7 @@ fn it_copy_with_progress_using_four_levels() {
 
     match result {
         Ok(_) => {}
-        Err(err) => panic!(err),
+        Err(err) => panic!("{:#?}", err),
     }
 
     match rx.recv() {
@@ -1877,7 +1877,7 @@ fn it_copy_with_progress_content_only_opton() {
         Ok(_) => panic!("Should be a error!"),
         Err(err) => match err.kind {
             ErrorKind::Other => {}
-            _ => panic!(format!("wrong error {}", err.to_string())),
+            _ => panic!("{}", format!("wrong error {}", err.to_string())),
         },
     };
 }
@@ -2124,7 +2124,7 @@ fn it_move_exist_not_overwrite() {
         Ok(_) => panic!("Should be a error!"),
         Err(err) => match err.kind {
             ErrorKind::AlreadyExists => {}
-            _ => panic!(format!("{}", err.to_string())),
+            _ => panic!("{}", format!("{}", err.to_string())),
         },
     };
 }
@@ -2287,7 +2287,7 @@ fn it_move_content_only_option() {
                 assert_eq!(1, 1);
             }
             _ => {
-                panic!(format!("wrong error {}", err.to_string()));
+                panic!("{}", format!("wrong error {}", err.to_string()));
             }
         },
         Ok(_) => {
@@ -2390,7 +2390,7 @@ fn it_move_progress_work() {
 
     match result {
         Ok(_) => {}
-        Err(err) => panic!(err),
+        Err(err) => panic!("{:#?}", err),
     }
 }
 
@@ -2520,7 +2520,7 @@ fn it_move_with_progress_exist_overwrite() {
 
     match result {
         Ok(_) => {}
-        Err(err) => panic!(err),
+        Err(err) => panic!("{:#?}", err),
     }
 
     match rx.recv() {
@@ -2595,7 +2595,7 @@ fn it_move_with_progress_exist_not_overwrite() {
         Ok(_) => panic!("Should be a error!"),
         Err(err) => match err.kind {
             ErrorKind::AlreadyExists => {}
-            _ => panic!(format!("{}", err.to_string())),
+            _ => panic!("{}", format!("{}", err.to_string())),
         },
     };
 }
@@ -2687,7 +2687,7 @@ fn it_move_with_progress_exist_skip_exist() {
 
     match result {
         Ok(_) => {}
-        Err(err) => panic!(err),
+        Err(err) => panic!("{:#?}", err),
     }
 
     match rx.recv() {
@@ -2781,7 +2781,7 @@ fn it_move_with_progress_exist_overwrite_and_skip_exist() {
 
     match result {
         Ok(_) => {}
-        Err(err) => panic!(err),
+        Err(err) => panic!("{:#?}", err),
     }
 
     match rx.recv() {
@@ -2807,7 +2807,7 @@ fn it_move_with_progress_content_only_option() {
         Ok(_) => panic!("Should be a error!"),
         Err(err) => match err.kind {
             ErrorKind::Other => {}
-            _ => panic!(format!("wrong error {}", err.to_string())),
+            _ => panic!("{}", format!("wrong error {}", err.to_string())),
         },
     };
 }
@@ -2885,17 +2885,17 @@ fn it_copy_with_progress_exist_user_decide_overwrite() {
     assert!(&sub.0.exists());
     assert!(&sub.1.exists());
 
-    fs_extra::file::write_all(&file1.0, "content1").unwrap();
-    fs_extra::file::write_all(&file2.0, "content2").unwrap();
-    fs_extra::file::write_all(&file3.0, "content3").unwrap();
-    fs_extra::file::write_all(&file4.0, "content4").unwrap();
-    fs_extra::file::write_all(&file5.0, "content5").unwrap();
+    fs_extra_back_pair::file::write_all(&file1.0, "content1").unwrap();
+    fs_extra_back_pair::file::write_all(&file2.0, "content2").unwrap();
+    fs_extra_back_pair::file::write_all(&file3.0, "content3").unwrap();
+    fs_extra_back_pair::file::write_all(&file4.0, "content4").unwrap();
+    fs_extra_back_pair::file::write_all(&file5.0, "content5").unwrap();
 
-    fs_extra::file::write_all(&file1.1, "old content11").unwrap();
-    fs_extra::file::write_all(&file2.1, "old content12").unwrap();
-    fs_extra::file::write_all(&file3.1, "old content13").unwrap();
-    fs_extra::file::write_all(&file4.1, "old content14").unwrap();
-    fs_extra::file::write_all(&file5.1, "old content15").unwrap();
+    fs_extra_back_pair::file::write_all(&file1.1, "old content11").unwrap();
+    fs_extra_back_pair::file::write_all(&file2.1, "old content12").unwrap();
+    fs_extra_back_pair::file::write_all(&file3.1, "old content13").unwrap();
+    fs_extra_back_pair::file::write_all(&file4.1, "old content14").unwrap();
+    fs_extra_back_pair::file::write_all(&file5.1, "old content15").unwrap();
 
     assert!(file1.0.exists());
     assert!(file2.0.exists());
@@ -2956,7 +2956,7 @@ fn it_copy_with_progress_exist_user_decide_overwrite() {
 
     match result {
         Ok(_) => {}
-        Err(err) => panic!(err),
+        Err(err) => panic!("{:#?}", err),
     }
     rx.try_recv().unwrap();
 }
@@ -2989,17 +2989,17 @@ fn it_copy_with_progress_exist_user_decide_overwrite_all() {
     assert!(&sub.0.exists());
     assert!(&sub.1.exists());
 
-    fs_extra::file::write_all(&file1.0, "content1").unwrap();
-    fs_extra::file::write_all(&file2.0, "content2").unwrap();
-    fs_extra::file::write_all(&file3.0, "content3").unwrap();
-    fs_extra::file::write_all(&file4.0, "content4").unwrap();
-    fs_extra::file::write_all(&file5.0, "content5").unwrap();
+    fs_extra_back_pair::file::write_all(&file1.0, "content1").unwrap();
+    fs_extra_back_pair::file::write_all(&file2.0, "content2").unwrap();
+    fs_extra_back_pair::file::write_all(&file3.0, "content3").unwrap();
+    fs_extra_back_pair::file::write_all(&file4.0, "content4").unwrap();
+    fs_extra_back_pair::file::write_all(&file5.0, "content5").unwrap();
 
-    fs_extra::file::write_all(&file1.1, "old content11").unwrap();
-    fs_extra::file::write_all(&file2.1, "old content12").unwrap();
-    fs_extra::file::write_all(&file3.1, "old content13").unwrap();
-    fs_extra::file::write_all(&file4.1, "old content14").unwrap();
-    fs_extra::file::write_all(&file5.1, "old content15").unwrap();
+    fs_extra_back_pair::file::write_all(&file1.1, "old content11").unwrap();
+    fs_extra_back_pair::file::write_all(&file2.1, "old content12").unwrap();
+    fs_extra_back_pair::file::write_all(&file3.1, "old content13").unwrap();
+    fs_extra_back_pair::file::write_all(&file4.1, "old content14").unwrap();
+    fs_extra_back_pair::file::write_all(&file5.1, "old content15").unwrap();
 
     assert!(file1.0.exists());
     assert!(file2.0.exists());
@@ -3060,7 +3060,7 @@ fn it_copy_with_progress_exist_user_decide_overwrite_all() {
 
     match result {
         Ok(_) => {}
-        Err(err) => panic!(err),
+        Err(err) => panic!("{:#?}", err),
     }
     rx.try_recv().unwrap();
 }
@@ -3092,17 +3092,17 @@ fn it_copy_with_progress_exist_user_decide_skip() {
     assert!(&sub.0.exists());
     assert!(&sub.1.exists());
 
-    fs_extra::file::write_all(&file1.0, "content1").unwrap();
-    fs_extra::file::write_all(&file2.0, "content2").unwrap();
-    fs_extra::file::write_all(&file3.0, "content3").unwrap();
-    fs_extra::file::write_all(&file4.0, "content4").unwrap();
-    fs_extra::file::write_all(&file5.0, "content5").unwrap();
+    fs_extra_back_pair::file::write_all(&file1.0, "content1").unwrap();
+    fs_extra_back_pair::file::write_all(&file2.0, "content2").unwrap();
+    fs_extra_back_pair::file::write_all(&file3.0, "content3").unwrap();
+    fs_extra_back_pair::file::write_all(&file4.0, "content4").unwrap();
+    fs_extra_back_pair::file::write_all(&file5.0, "content5").unwrap();
 
-    fs_extra::file::write_all(&file1.1, "old content11").unwrap();
-    fs_extra::file::write_all(&file2.1, "old content12").unwrap();
-    fs_extra::file::write_all(&file3.1, "old content13").unwrap();
-    fs_extra::file::write_all(&file4.1, "old content14").unwrap();
-    fs_extra::file::write_all(&file5.1, "old content15").unwrap();
+    fs_extra_back_pair::file::write_all(&file1.1, "old content11").unwrap();
+    fs_extra_back_pair::file::write_all(&file2.1, "old content12").unwrap();
+    fs_extra_back_pair::file::write_all(&file3.1, "old content13").unwrap();
+    fs_extra_back_pair::file::write_all(&file4.1, "old content14").unwrap();
+    fs_extra_back_pair::file::write_all(&file5.1, "old content15").unwrap();
 
     assert!(file1.0.exists());
     assert!(file2.0.exists());
@@ -3163,7 +3163,7 @@ fn it_copy_with_progress_exist_user_decide_skip() {
 
     match result {
         Ok(_) => {}
-        Err(err) => panic!(err),
+        Err(err) => panic!("{:#?}", err),
     }
     rx.try_recv().unwrap();
 }
@@ -3195,17 +3195,17 @@ fn it_copy_with_progress_exist_user_decide_skip_all() {
     assert!(&sub.0.exists());
     assert!(&sub.1.exists());
 
-    fs_extra::file::write_all(&file1.0, "content1").unwrap();
-    fs_extra::file::write_all(&file2.0, "content2").unwrap();
-    fs_extra::file::write_all(&file3.0, "content3").unwrap();
-    fs_extra::file::write_all(&file4.0, "content4").unwrap();
-    fs_extra::file::write_all(&file5.0, "content5").unwrap();
+    fs_extra_back_pair::file::write_all(&file1.0, "content1").unwrap();
+    fs_extra_back_pair::file::write_all(&file2.0, "content2").unwrap();
+    fs_extra_back_pair::file::write_all(&file3.0, "content3").unwrap();
+    fs_extra_back_pair::file::write_all(&file4.0, "content4").unwrap();
+    fs_extra_back_pair::file::write_all(&file5.0, "content5").unwrap();
 
-    fs_extra::file::write_all(&file1.1, "old content11").unwrap();
-    fs_extra::file::write_all(&file2.1, "old content12").unwrap();
-    fs_extra::file::write_all(&file3.1, "old content13").unwrap();
-    fs_extra::file::write_all(&file4.1, "old content14").unwrap();
-    fs_extra::file::write_all(&file5.1, "old content15").unwrap();
+    fs_extra_back_pair::file::write_all(&file1.1, "old content11").unwrap();
+    fs_extra_back_pair::file::write_all(&file2.1, "old content12").unwrap();
+    fs_extra_back_pair::file::write_all(&file3.1, "old content13").unwrap();
+    fs_extra_back_pair::file::write_all(&file4.1, "old content14").unwrap();
+    fs_extra_back_pair::file::write_all(&file5.1, "old content15").unwrap();
 
     assert!(file1.0.exists());
     assert!(file2.0.exists());
@@ -3266,7 +3266,7 @@ fn it_copy_with_progress_exist_user_decide_skip_all() {
 
     match result {
         Ok(_) => {}
-        Err(err) => panic!(err),
+        Err(err) => panic!("{:#?}", err),
     }
     rx.try_recv().unwrap();
 }
@@ -3298,17 +3298,17 @@ fn it_copy_with_progress_exist_user_decide_retry() {
     assert!(&sub.0.exists());
     assert!(&sub.1.exists());
 
-    fs_extra::file::write_all(&file1.0, "content1").unwrap();
-    fs_extra::file::write_all(&file2.0, "content2").unwrap();
-    fs_extra::file::write_all(&file3.0, "content3").unwrap();
-    fs_extra::file::write_all(&file4.0, "content4").unwrap();
-    fs_extra::file::write_all(&file5.0, "content5").unwrap();
+    fs_extra_back_pair::file::write_all(&file1.0, "content1").unwrap();
+    fs_extra_back_pair::file::write_all(&file2.0, "content2").unwrap();
+    fs_extra_back_pair::file::write_all(&file3.0, "content3").unwrap();
+    fs_extra_back_pair::file::write_all(&file4.0, "content4").unwrap();
+    fs_extra_back_pair::file::write_all(&file5.0, "content5").unwrap();
 
-    fs_extra::file::write_all(&file1.1, "old content11").unwrap();
-    fs_extra::file::write_all(&file2.1, "old content12").unwrap();
-    fs_extra::file::write_all(&file3.1, "old content13").unwrap();
-    fs_extra::file::write_all(&file4.1, "old content14").unwrap();
-    fs_extra::file::write_all(&file5.1, "old content15").unwrap();
+    fs_extra_back_pair::file::write_all(&file1.1, "old content11").unwrap();
+    fs_extra_back_pair::file::write_all(&file2.1, "old content12").unwrap();
+    fs_extra_back_pair::file::write_all(&file3.1, "old content13").unwrap();
+    fs_extra_back_pair::file::write_all(&file4.1, "old content14").unwrap();
+    fs_extra_back_pair::file::write_all(&file5.1, "old content15").unwrap();
 
     assert!(file1.0.exists());
     assert!(file2.0.exists());
@@ -3374,7 +3374,7 @@ fn it_copy_with_progress_exist_user_decide_retry() {
 
     match result {
         Ok(_) => {}
-        Err(err) => panic!(err),
+        Err(err) => panic!("{:#?}", err),
     }
     rx.try_recv().unwrap();
 }
@@ -3406,17 +3406,17 @@ fn it_move_with_progress_exist_user_decide_overwrite() {
     assert!(&sub.0.exists());
     assert!(&sub.1.exists());
 
-    fs_extra::file::write_all(&file1.0, "content1").unwrap();
-    fs_extra::file::write_all(&file2.0, "content2").unwrap();
-    fs_extra::file::write_all(&file3.0, "content3").unwrap();
-    fs_extra::file::write_all(&file4.0, "content4").unwrap();
-    fs_extra::file::write_all(&file5.0, "content5").unwrap();
+    fs_extra_back_pair::file::write_all(&file1.0, "content1").unwrap();
+    fs_extra_back_pair::file::write_all(&file2.0, "content2").unwrap();
+    fs_extra_back_pair::file::write_all(&file3.0, "content3").unwrap();
+    fs_extra_back_pair::file::write_all(&file4.0, "content4").unwrap();
+    fs_extra_back_pair::file::write_all(&file5.0, "content5").unwrap();
 
-    fs_extra::file::write_all(&file1.1, "old content11").unwrap();
-    fs_extra::file::write_all(&file2.1, "old content12").unwrap();
-    fs_extra::file::write_all(&file3.1, "old content13").unwrap();
-    fs_extra::file::write_all(&file4.1, "old content14").unwrap();
-    fs_extra::file::write_all(&file5.1, "old content15").unwrap();
+    fs_extra_back_pair::file::write_all(&file1.1, "old content11").unwrap();
+    fs_extra_back_pair::file::write_all(&file2.1, "old content12").unwrap();
+    fs_extra_back_pair::file::write_all(&file3.1, "old content13").unwrap();
+    fs_extra_back_pair::file::write_all(&file4.1, "old content14").unwrap();
+    fs_extra_back_pair::file::write_all(&file5.1, "old content15").unwrap();
 
     assert!(file1.0.exists());
     assert!(file2.0.exists());
@@ -3473,7 +3473,7 @@ fn it_move_with_progress_exist_user_decide_overwrite() {
 
     match result {
         Ok(_) => {}
-        Err(err) => panic!(err),
+        Err(err) => panic!("{:#?}", err),
     }
     rx.try_recv().unwrap();
 }
@@ -3506,17 +3506,17 @@ fn it_move_with_progress_exist_user_decide_overwrite_all() {
     assert!(&sub.0.exists());
     assert!(&sub.1.exists());
 
-    fs_extra::file::write_all(&file1.0, "content1").unwrap();
-    fs_extra::file::write_all(&file2.0, "content2").unwrap();
-    fs_extra::file::write_all(&file3.0, "content3").unwrap();
-    fs_extra::file::write_all(&file4.0, "content4").unwrap();
-    fs_extra::file::write_all(&file5.0, "content5").unwrap();
+    fs_extra_back_pair::file::write_all(&file1.0, "content1").unwrap();
+    fs_extra_back_pair::file::write_all(&file2.0, "content2").unwrap();
+    fs_extra_back_pair::file::write_all(&file3.0, "content3").unwrap();
+    fs_extra_back_pair::file::write_all(&file4.0, "content4").unwrap();
+    fs_extra_back_pair::file::write_all(&file5.0, "content5").unwrap();
 
-    fs_extra::file::write_all(&file1.1, "old content11").unwrap();
-    fs_extra::file::write_all(&file2.1, "old content12").unwrap();
-    fs_extra::file::write_all(&file3.1, "old content13").unwrap();
-    fs_extra::file::write_all(&file4.1, "old content14").unwrap();
-    fs_extra::file::write_all(&file5.1, "old content15").unwrap();
+    fs_extra_back_pair::file::write_all(&file1.1, "old content11").unwrap();
+    fs_extra_back_pair::file::write_all(&file2.1, "old content12").unwrap();
+    fs_extra_back_pair::file::write_all(&file3.1, "old content13").unwrap();
+    fs_extra_back_pair::file::write_all(&file4.1, "old content14").unwrap();
+    fs_extra_back_pair::file::write_all(&file5.1, "old content15").unwrap();
 
     assert!(file1.0.exists());
     assert!(file2.0.exists());
@@ -3573,7 +3573,7 @@ fn it_move_with_progress_exist_user_decide_overwrite_all() {
 
     match result {
         Ok(_) => {}
-        Err(err) => panic!(err),
+        Err(err) => panic!("{:#?}", err),
     }
     rx.try_recv().unwrap();
 }
@@ -3605,17 +3605,17 @@ fn it_move_with_progress_exist_user_decide_skip() {
     assert!(&sub.0.exists());
     assert!(&sub.1.exists());
 
-    fs_extra::file::write_all(&file1.0, "content1").unwrap();
-    fs_extra::file::write_all(&file2.0, "content2").unwrap();
-    fs_extra::file::write_all(&file3.0, "content3").unwrap();
-    fs_extra::file::write_all(&file4.0, "content4").unwrap();
-    fs_extra::file::write_all(&file5.0, "content5").unwrap();
+    fs_extra_back_pair::file::write_all(&file1.0, "content1").unwrap();
+    fs_extra_back_pair::file::write_all(&file2.0, "content2").unwrap();
+    fs_extra_back_pair::file::write_all(&file3.0, "content3").unwrap();
+    fs_extra_back_pair::file::write_all(&file4.0, "content4").unwrap();
+    fs_extra_back_pair::file::write_all(&file5.0, "content5").unwrap();
 
-    fs_extra::file::write_all(&file1.1, "old content11").unwrap();
-    fs_extra::file::write_all(&file2.1, "old content12").unwrap();
-    fs_extra::file::write_all(&file3.1, "old content13").unwrap();
-    fs_extra::file::write_all(&file4.1, "old content14").unwrap();
-    fs_extra::file::write_all(&file5.1, "old content15").unwrap();
+    fs_extra_back_pair::file::write_all(&file1.1, "old content11").unwrap();
+    fs_extra_back_pair::file::write_all(&file2.1, "old content12").unwrap();
+    fs_extra_back_pair::file::write_all(&file3.1, "old content13").unwrap();
+    fs_extra_back_pair::file::write_all(&file4.1, "old content14").unwrap();
+    fs_extra_back_pair::file::write_all(&file5.1, "old content15").unwrap();
 
     assert!(file1.0.exists());
     assert!(file2.0.exists());
@@ -3672,7 +3672,7 @@ fn it_move_with_progress_exist_user_decide_skip() {
 
     match result {
         Ok(_) => {}
-        Err(err) => panic!(err),
+        Err(err) => panic!("{:#?}", err),
     }
     rx.try_recv().unwrap();
 }
@@ -3704,17 +3704,17 @@ fn it_move_with_progress_exist_user_decide_skip_all() {
     assert!(&sub.0.exists());
     assert!(&sub.1.exists());
 
-    fs_extra::file::write_all(&file1.0, "content1").unwrap();
-    fs_extra::file::write_all(&file2.0, "content2").unwrap();
-    fs_extra::file::write_all(&file3.0, "content3").unwrap();
-    fs_extra::file::write_all(&file4.0, "content4").unwrap();
-    fs_extra::file::write_all(&file5.0, "content5").unwrap();
+    fs_extra_back_pair::file::write_all(&file1.0, "content1").unwrap();
+    fs_extra_back_pair::file::write_all(&file2.0, "content2").unwrap();
+    fs_extra_back_pair::file::write_all(&file3.0, "content3").unwrap();
+    fs_extra_back_pair::file::write_all(&file4.0, "content4").unwrap();
+    fs_extra_back_pair::file::write_all(&file5.0, "content5").unwrap();
 
-    fs_extra::file::write_all(&file1.1, "old content11").unwrap();
-    fs_extra::file::write_all(&file2.1, "old content12").unwrap();
-    fs_extra::file::write_all(&file3.1, "old content13").unwrap();
-    fs_extra::file::write_all(&file4.1, "old content14").unwrap();
-    fs_extra::file::write_all(&file5.1, "old content15").unwrap();
+    fs_extra_back_pair::file::write_all(&file1.1, "old content11").unwrap();
+    fs_extra_back_pair::file::write_all(&file2.1, "old content12").unwrap();
+    fs_extra_back_pair::file::write_all(&file3.1, "old content13").unwrap();
+    fs_extra_back_pair::file::write_all(&file4.1, "old content14").unwrap();
+    fs_extra_back_pair::file::write_all(&file5.1, "old content15").unwrap();
 
     assert!(file1.0.exists());
     assert!(file2.0.exists());
@@ -3773,7 +3773,7 @@ fn it_move_with_progress_exist_user_decide_skip_all() {
 
     match result {
         Ok(_) => {}
-        Err(err) => panic!(err),
+        Err(err) => panic!("{:#?}", err),
     }
     rx.try_recv().unwrap();
 }
@@ -3805,17 +3805,17 @@ fn it_move_with_progress_exist_user_decide_retry() {
     assert!(&sub.0.exists());
     assert!(&sub.1.exists());
 
-    fs_extra::file::write_all(&file1.0, "content1").unwrap();
-    fs_extra::file::write_all(&file2.0, "content2").unwrap();
-    fs_extra::file::write_all(&file3.0, "content3").unwrap();
-    fs_extra::file::write_all(&file4.0, "content4").unwrap();
-    fs_extra::file::write_all(&file5.0, "content5").unwrap();
+    fs_extra_back_pair::file::write_all(&file1.0, "content1").unwrap();
+    fs_extra_back_pair::file::write_all(&file2.0, "content2").unwrap();
+    fs_extra_back_pair::file::write_all(&file3.0, "content3").unwrap();
+    fs_extra_back_pair::file::write_all(&file4.0, "content4").unwrap();
+    fs_extra_back_pair::file::write_all(&file5.0, "content5").unwrap();
 
-    fs_extra::file::write_all(&file1.1, "old content11").unwrap();
-    fs_extra::file::write_all(&file2.1, "old content12").unwrap();
-    fs_extra::file::write_all(&file3.1, "old content13").unwrap();
-    fs_extra::file::write_all(&file4.1, "old content14").unwrap();
-    fs_extra::file::write_all(&file5.1, "old content15").unwrap();
+    fs_extra_back_pair::file::write_all(&file1.1, "old content11").unwrap();
+    fs_extra_back_pair::file::write_all(&file2.1, "old content12").unwrap();
+    fs_extra_back_pair::file::write_all(&file3.1, "old content13").unwrap();
+    fs_extra_back_pair::file::write_all(&file4.1, "old content14").unwrap();
+    fs_extra_back_pair::file::write_all(&file5.1, "old content15").unwrap();
 
     assert!(file1.0.exists());
     assert!(file2.0.exists());
@@ -3877,7 +3877,7 @@ fn it_move_with_progress_exist_user_decide_retry() {
 
     match result {
         Ok(_) => {}
-        Err(err) => panic!(err),
+        Err(err) => panic!("{:#?}", err),
     }
     rx.try_recv().unwrap();
 }

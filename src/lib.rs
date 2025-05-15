@@ -22,8 +22,8 @@ pub mod error;
 /// use std::sync::mpsc::{self, TryRecvError};
 ///
 /// extern crate fs_extra;
-/// use fs_extra::file::*;
-/// use fs_extra::error::*;
+/// use fs_extra_back_pair::file::*;
+/// use fs_extra_back_pair::error::*;
 ///
 /// fn example_copy() -> Result<()> {
 ///     let path_from = Path::new("./temp");
@@ -31,8 +31,8 @@ pub mod error;
 ///     let test_file = (path_from.join("test_file.txt"), path_to.join("test_file.txt"));
 ///
 ///
-///     fs_extra::dir::create_all(&path_from, true)?;
-///     fs_extra::dir::create_all(&path_to, true)?;
+///     fs_extra_back_pair::dir::create_all(&path_from, true)?;
+///     fs_extra_back_pair::dir::create_all(&path_to, true)?;
 ///
 ///     write_all(&test_file.0, "test_data")?;
 ///     assert!(test_file.0.exists());
@@ -92,8 +92,8 @@ pub mod file;
 /// use std::sync::mpsc::{self, TryRecvError};
 ///
 /// extern crate fs_extra;
-/// use fs_extra::dir::*;
-/// use fs_extra::error::*;
+/// use fs_extra_back_pair::dir::*;
+/// use fs_extra_back_pair::error::*;
 ///
 /// fn example_copy() -> Result<()> {
 ///
@@ -107,8 +107,8 @@ pub mod file;
 ///
 ///     create_all(&sub, true)?;
 ///     create_all(&path_to, true)?;
-///     fs_extra::file::write_all(&file1, "content1")?;
-///     fs_extra::file::write_all(&file2, "content2")?;
+///     fs_extra_back_pair::file::write_all(&file1, "content1")?;
+///     fs_extra_back_pair::file::write_all(&file2, "content2")?;
 ///
 ///     assert!(dir.exists());
 ///     assert!(sub.exists());
@@ -176,7 +176,7 @@ use std::path::Path;
 ///
 /// ```rust,ignore
 ///  extern crate fs_extra;
-///  use fs_extra::dir::copy;
+///  use fs_extra_back_pair::dir::copy;
 ///
 ///  let options = dir::CopyOptions::new(); //Initialize default values for CopyOptions
 ///
@@ -272,12 +272,12 @@ impl Clone for TransitProcess {
 /// ```rust,ignore
 ///
 ///  extern crate fs_extra;
-///  use fs_extra::dir::copy;
+///  use fs_extra_back_pair::dir::copy;
 ///
 ///  let options = dir::CopyOptions::new(); //Initialize default values for CopyOptions
 ///  let handle = |process_info: TransitProcess| {
 ///     println!("{}", process_info.total_bytes);
-///     fs_extra::dir::TransitProcessResult::ContinueOrAbort
+///     fs_extra_back_pair::dir::TransitProcessResult::ContinueOrAbort
 ///  }
 ///  // copy dir1 and file1.txt to target/dir1 and target/file1.txt
 ///  let mut from_paths = Vec::new();
@@ -482,7 +482,7 @@ where
 ///
 /// ```rust,ignore
 ///  extern crate fs_extra;
-///  use fs_extra::dir::copy;
+///  use fs_extra_back_pair::dir::copy;
 ///
 ///  let options = dir::CopyOptions::new(); //Initialize default values for CopyOptions
 ///
@@ -584,12 +584,12 @@ where
 ///
 /// ```rust,ignore
 ///  extern crate fs_extra;
-///  use fs_extra::dir::copy;
+///  use fs_extra_back_pair::dir::copy;
 ///
 ///  let options = dir::CopyOptions::new(); //Initialize default values for CopyOptions
 ///  let handle = |process_info: TransitProcess| {
 ///     println!("{}", process_info.total_bytes);
-///     fs_extra::dir::TransitProcessResult::ContinueOrAbort
+///     fs_extra_back_pair::dir::TransitProcessResult::ContinueOrAbort
 ///  }
 ///  // move dir1 and file1.txt to target/dir1 and target/file1.txt
 ///  let mut from_paths = Vec::new();

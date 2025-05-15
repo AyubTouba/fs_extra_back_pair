@@ -55,14 +55,14 @@ impl ErrorKind {
 
 /// A specialized Result type for fs_extra operations.
 ///
-/// This typedef is generally used to avoid writing out fs_extra::Error directly
+/// This typedef is generally used to avoid writing out fs_extra_back_pair::Error directly
 /// and is otherwise a direct mapping to Result.
 ///
 ///#Examples
 ///
 /// ```rust,ignore
 /// extern crate fs_extra;
-/// use fs_extra::dir::create;
+/// use fs_extra_back_pair::dir::create;
 ///
 ///fn get_string() -> io::Result<()> {
 ///
@@ -94,7 +94,7 @@ impl Error {
     /// ```rust,ignore
     ///
     /// extern crate fs_extra;
-    /// use fs_extra::error::{Error, ErrorKind};
+    /// use fs_extra_back_pair::error::{Error, ErrorKind};
     ///
     /// errors can be created from strings
     /// let custom_error = Error::new(ErrorKind::Other, "Other Error!");

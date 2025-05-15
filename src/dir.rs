@@ -251,7 +251,7 @@ pub struct LsResult {
 ///
 /// ```rust,ignore
 /// extern crate fs_extra;
-/// use fs_extra::dir::{get_details_entry, DirEntryAttr};
+/// use fs_extra_back_pair::dir::{get_details_entry, DirEntryAttr};
 /// use std::collections::{HashMap, HashSet};
 ///
 /// let mut config = HashSet::new();
@@ -429,7 +429,7 @@ where
 ///
 /// ```rust,ignore
 /// extern crate fs_extra;
-/// use fs_extra::dir::{ls, DirEntryAttr, LsResult};
+/// use fs_extra_back_pair::dir::{ls, DirEntryAttr, LsResult};
 /// use std::collections::HashSet;
 ///
 /// let mut config = HashSet::new();
@@ -485,7 +485,7 @@ where
 ///
 /// ```rust,ignore
 /// extern crate fs_extra;
-/// use fs_extra::dir::create;
+/// use fs_extra_back_pair::dir::create;
 ///
 /// create("dir", false); // create directory
 /// ```
@@ -520,7 +520,7 @@ where
 ///
 /// ```rust,ignore
 /// extern crate fs_extra;
-/// use fs_extra::dir::create_all;
+/// use fs_extra_back_pair::dir::create_all;
 ///
 /// create_all("/some/dir", false); // create directory some and dir
 pub fn create_all<P>(path: P, erase: bool) -> Result<()>
@@ -550,7 +550,7 @@ where
 /// # Example
 /// ```rust,ignore
 /// extern crate fs_extra;
-/// use fs_extra::dir::copy;
+/// use fs_extra_back_pair::dir::copy;
 ///
 /// let options = CopyOptions::new(); //Initialize default values for CopyOptions
 /// // options.mirror_copy = true; // To mirror copy the whole structure of the source directory
@@ -661,7 +661,7 @@ where
 /// # Examples
 /// ```rust,ignore
 /// extern crate fs_extra;
-/// use fs_extra::dir::get_dir_content;
+/// use fs_extra_back_pair::dir::get_dir_content;
 ///
 /// let dir_content = get_dir_content("dir")?;
 /// for directory in dir_content.directories {
@@ -695,7 +695,7 @@ where
 /// # Examples
 /// ```rust,ignore
 /// extern crate fs_extra;
-/// use fs_extra::dir::{DirOptions, get_dir_content2};
+/// use fs_extra_back_pair::dir::{DirOptions, get_dir_content2};
 ///
 /// let mut options = DirOptions::new();
 /// options.depth = 3; // Get 3 levels of folder.
@@ -781,7 +781,7 @@ where
 /// # Examples
 /// ```rust,ignore
 /// extern crate fs_extra;
-/// use fs_extra::dir::get_size;
+/// use fs_extra_back_pair::dir::get_size;
 ///
 /// let folder_size = get_size("dir")?;
 /// println!("{}", folder_size); // print directory size in bytes
@@ -835,12 +835,12 @@ where
 /// # Example
 /// ```rust,ignore
 /// extern crate fs_extra;
-/// use fs_extra::dir::copy;
+/// use fs_extra_back_pair::dir::copy;
 ///
 /// let options = CopyOptions::new(); //Initialize default values for CopyOptions
 /// let handle = |process_info: TransitProcess|  {
 ///     println!("{}", process_info.total_bytes);
-///     fs_extra::dir::TransitProcessResult::ContinueOrAbort
+///     fs_extra_back_pair::dir::TransitProcessResult::ContinueOrAbort
 /// }
 /// // copy source/dir1 to target/dir1
 /// copy_with_progress("source/dir1", "target/dir1", &options, handle)?;
@@ -1058,7 +1058,7 @@ where
 /// # Example
 /// ```rust,ignore
 /// extern crate fs_extra;
-/// use fs_extra::dir::move_dir;
+/// use fs_extra_back_pair::dir::move_dir;
 ///
 /// let options = CopyOptions::new(); //Initialize default values for CopyOptions
 ///
@@ -1178,12 +1178,12 @@ where
 /// # Example
 /// ```rust,ignore
 /// extern crate fs_extra;
-/// use fs_extra::dir::move_dir_with_progress;
+/// use fs_extra_back_pair::dir::move_dir_with_progress;
 ///
 /// let options = CopyOptions::new(); //Initialize default values for CopyOptions
 /// let handle = |process_info: TransitProcess| {
 ///     println!("{}", process_info.total_bytes);
-///     fs_extra::dir::TransitProcessResult::ContinueOrAbort
+///     fs_extra_back_pair::dir::TransitProcessResult::ContinueOrAbort
 /// }
 ///
 /// // move source/dir1 to target/dir1
@@ -1400,7 +1400,7 @@ where
 /// # Example
 /// ```rust,ignore
 /// extern crate fs_extra;
-/// use fs_extra::dir::remove;
+/// use fs_extra_back_pair::dir::remove;
 ///
 /// remove("source/dir1"); // remove dir1
 /// ```
